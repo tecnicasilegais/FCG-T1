@@ -23,7 +23,7 @@ using namespace std;
 #endif
 
 #ifdef __linux__
-#include <glut.h>
+#include <GL/glut.h>
 #endif
 
 #include "Ponto.h"
@@ -32,17 +32,22 @@ using namespace std;
 class Poligono
 {
     vector <Ponto> Vertices;
-    Ponto Min, Max;
+    Ponto left, right, top, bottom;
 public:
     Poligono();
-    Ponto getVertice(int);
-    unsigned long getNVertices();
-    void insereVertice(Ponto);
-    void desenhaPoligono();
-    void desenhaVertices();
+    Ponto get_vertice(int);
+    unsigned long size();
+    void insere_vertice(Ponto);
+    void desenha_poligono();
+    void desenha_vertices();
+    void desenha_vertice(int r, int g, int b, int pos);
     void imprime();
-    void atualizaLimites();
-    void obtemLimites(Ponto &Min, Ponto &Max);
+    void initialize(Ponto initial);
+    Ponto get_left();
+    Ponto get_right();
+    Ponto get_top();
+    Ponto get_bottom();
+    int menorPosicao;
 };
 
 #endif 

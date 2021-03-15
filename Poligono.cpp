@@ -9,31 +9,45 @@
 #include "Poligono.h"
 
 Poligono::Poligono()
-{
-    
-}
+= default;
 
-void Poligono::insereVertice(Ponto p)
+void Poligono::insere_vertice(Ponto p)
 {
+	if (p.x < left.x)
+        left = p;
+    if (p.x > right.x)
+        right = p;
+    if (p.y < bottom.y)
+        bottom = p;
+    if (p.y > top.y)
+        top = p;
+	
     Vertices.push_back(p);
 }
 
-Ponto Poligono::getVertice(int i)
+Ponto Poligono::get_vertice(int i)
 {
     return Vertices[i];
 }
-void Poligono::desenhaPoligono()
+void Poligono::desenha_poligono()
 {
     glBegin(GL_LINE_LOOP);
     for (int i=0; i<Vertices.size(); i++)
         glVertex3f(Vertices[i].x,Vertices[i].y,Vertices[i].z);
     glEnd();
 }
-void Poligono::desenhaVertices()
+void Poligono::desenha_vertices()
 {
     glBegin(GL_POINTS);
     for (int i=0; i<Vertices.size(); i++)
         glVertex3f(Vertices[i].x,Vertices[i].y,Vertices[i].z);
+    glEnd();
+}
+void Poligono::desenha_vertice(int r, int g, int b, int pos)
+{
+    glColor3f(r, g, b); // R, G, B  [0..1]
+    glBegin(GL_POINTS);
+    glVertex3f(Vertices[pos].x, Vertices[pos].y, Vertices[pos].z);
     glEnd();
 }
 void Poligono::imprime()
@@ -41,18 +55,31 @@ void Poligono::imprime()
     for (int i=0; i<Vertices.size(); i++)
         Vertices[i].imprime();
 }
-unsigned long Poligono::getNVertices()
+unsigned long Poligono::size()
 {
     return Vertices.size();
 }
-
-void Poligono::obtemLimites(Ponto &Min, Ponto &Max)
+void Poligono::initialize(Ponto initial)
 {
-    Max = Min = Vertices[0];
-    
-    for (int i=0; i<Vertices.size(); i++)
-    {
-        Min = ObtemMinimo (Vertices[i], Min);
-        Max = ObtemMaximo (Vertices[i], Max);
-    }
+    left = initial;
+    right = initial;
+    top = initial;
+    bottom = initial;
+    Vertices.push_back(initial);
+}
+Ponto Poligono::get_left()
+{
+    return left;
+}
+Ponto Poligono::get_right()
+{
+    return right;
+}
+Ponto Poligono::get_top()
+{
+    return top;
+}
+Ponto Poligono::get_bottom()
+{
+    return bottom;
 }

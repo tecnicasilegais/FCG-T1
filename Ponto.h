@@ -20,13 +20,8 @@ public:
     Ponto(float x, float y, float z=0);
     void set(float x, float y, float z=0);
     void imprime();
-    void multiplica(double x, double y, double z);
-    void soma(double x, double y, double z);
+    bool operator==(const Ponto other) const;
 } ;
 
-
-Ponto ObtemMinimo (Ponto P1, Ponto P2);
-
-Ponto ObtemMaximo (Ponto P1, Ponto P2);
 
 #endif /* Ponto_hpp */
