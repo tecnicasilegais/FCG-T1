@@ -21,7 +21,11 @@ public:
     void set(float x, float y, float z=0);
     void imprime();
     bool operator==(const Ponto other) const;
+    void multiply(double x, double y, double z);
+    void sum(double x, double y, double z);
 } ;
 
+Ponto get_min(Ponto p1, Ponto p2);
+Ponto get_max(Ponto p1, Ponto p2);
 
 #endif /* Ponto_hpp */

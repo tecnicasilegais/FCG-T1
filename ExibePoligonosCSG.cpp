@@ -135,7 +135,7 @@ void LePoligono(const char *nome, Poligono &P)
         if(!input)
             break;
         nLinha++;
-        P.insereVertice(Ponto(x,y));
+        P.insere_vertice(Ponto(x,y));
     }
     cout << "Poligono lido com sucesso!" << endl;
 
@@ -146,26 +146,25 @@ void LePoligono(const char *nome, Poligono &P)
 // **********************************************************************
 void init()
 {
-    Ponto MinAux, MaxAux;
     
     // Define a cor do fundo da tela (AZUL)
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     
     // Le o primeiro pol’gono
     LePoligono("Retangulo.txt", A);
-    A.obtemLimites(Min, Max);
-    cout << "\tMinimo:"; Min.imprime();
-    cout << "\tMaximo:"; Max.imprime();
+	
+    cout << "\tMinimo:"; A.get_min().imprime();
+    cout << "\tMaximo:"; A.get_max().imprime();
     
     // Le o segundo pol’gono
     LePoligono("Triangulo.txt", B);
-    B.obtemLimites(MinAux, MaxAux);
-    cout << "\tMinimo:"; MinAux.imprime();
-    cout << "\tMaximo:"; MaxAux.imprime();
+
+    cout << "\tMinimo:"; B.get_min().imprime();
+    cout << "\tMaximo:"; B.get_max().imprime();
    
     // Atualiza os limites globais ap—s cada leitura
-    Min = ObtemMinimo(Min, MinAux);
-    Max = ObtemMaximo(Max, MaxAux);
+    Min = get_min(A.get_min(), B.get_min());
+    Max = get_max(A.get_max(), B.get_max());
 
     cout << "Limites Globais" << endl;
     cout << "\tMinimo:"; Min.imprime();
@@ -179,8 +178,8 @@ void init()
 
     // Calcula 1/3 da largura da janela
     Terco = Largura;
-    double fator = 1.0/3.0;
-    Terco.multiplica(fator, fator, fator);
+    double factor = 1.0/3.0;
+    Terco.multiply(factor, factor, factor);
 
     // Calcula 1/2 da largura da janela
     Meio.x = (Max.x+Min.x)/2;
@@ -282,9 +281,9 @@ void display( void )
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1,1,0); // R, G, B  [0..1]
-    A.desenhaPoligono();
+    A.desenha_poligono();
     glColor3f(1,0,0); // R, G, B  [0..1]
-    B.desenhaPoligono();
+    B.desenha_poligono();
     glPopMatrix();
 
     // Desenha o pol’gono A no meio, acima
@@ -293,7 +292,7 @@ void display( void )
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1,1,0); // R, G, B  [0..1]
-    A.desenhaPoligono();
+    A.desenha_poligono();
     glPopMatrix();
 
     // Desenha o pol’gono B no canto superior direito
@@ -302,7 +301,7 @@ void display( void )
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1,0,0); // R, G, B  [0..1]
-    B.desenhaPoligono();
+    B.desenha_poligono();
     glPopMatrix();
 
     // Desenha o pol’gono A no canto inferior esquerdo
@@ -311,7 +310,7 @@ void display( void )
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1,1,0); // R, G, B  [0..1]
-    A.desenhaPoligono();
+    A.desenha_poligono();
     glPopMatrix();
     
     // Desenha o pol’gono B no meio, abaixo
@@ -320,7 +319,7 @@ void display( void )
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1,0,0); // R, G, B  [0..1]
-    B.desenhaPoligono();
+    B.desenha_poligono();
     glPopMatrix();
 
 	glutSwapBuffers();

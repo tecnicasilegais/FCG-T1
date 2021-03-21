@@ -13,14 +13,14 @@ Poligono::Poligono()
 
 void Poligono::insere_vertice(Ponto p)
 {
-	if (p.x < left.x)
-        left = p;
-    if (p.x > right.x)
-        right = p;
-    if (p.y < bottom.y)
-        bottom = p;
-    if (p.y > top.y)
-        top = p;
+	if (p.x < min.x)
+        min.x = p.x;
+    if (p.x > max.x)
+        max.x = p.x;
+    if (p.y < min.y)
+        min.y = p.y;
+    if (p.y > max.y)
+        max.y= p.y;
 	
     Vertices.push_back(p);
 }
@@ -61,25 +61,15 @@ unsigned long Poligono::size()
 }
 void Poligono::initialize(Ponto initial)
 {
-    left = initial;
-    right = initial;
-    top = initial;
-    bottom = initial;
+    min = initial;
+    max = initial;
     Vertices.push_back(initial);
 }
-Ponto Poligono::get_left()
+Ponto Poligono::get_min()
 {
-    return left;
+    return min;
 }
-Ponto Poligono::get_right()
+Ponto Poligono::get_max()
 {
-    return right;
-}
-Ponto Poligono::get_top()
-{
-    return top;
-}
-Ponto Poligono::get_bottom()
-{
-    return bottom;
+    return max;
 }

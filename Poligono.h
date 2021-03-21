@@ -32,7 +32,7 @@ using namespace std;
 class Poligono
 {
     vector <Ponto> Vertices;
-    Ponto left, right, top, bottom;
+    Ponto min, max;
 public:
     Poligono();
     Ponto get_vertice(int);
@@ -43,10 +43,8 @@ public:
     void desenha_vertice(int r, int g, int b, int pos);
     void imprime();
     void initialize(Ponto initial);
-    Ponto get_left();
-    Ponto get_right();
-    Ponto get_top();
-    Ponto get_bottom();
+    Ponto get_min();
+    Ponto get_max();
     int menorPosicao;
 };
 
