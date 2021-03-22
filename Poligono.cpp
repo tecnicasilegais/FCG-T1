@@ -73,3 +73,15 @@ Ponto Poligono::get_max()
 {
     return max;
 }
+Poligono uniao(Poligono a, Poligono b)
+{
+	
+}
+Poligono intersecao(Poligono a, Poligono b)
+{
+	
+}
+Poligono diferenca(Poligono a, Poligono b)
+{
+	
+}

@@ -45,6 +45,9 @@ public:
     void initialize(Ponto initial);
     Ponto get_min();
     Ponto get_max();
+    Poligono uniao(Poligono a, Poligono b);
+    Poligono intersecao(Poligono a, Poligono b);
+    Poligono diferenca(Poligono a, Poligono b);
     int menorPosicao;
 };
 
