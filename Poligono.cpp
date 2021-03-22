@@ -41,9 +41,9 @@ Ponto Poligono::get_vertice(int i)
 void Poligono::desenha_poligono()
 {
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < Vertices.size(); i++)
+    for (auto &Vertice : Vertices)
     {
-        glVertex3f(Vertices[i].x, Vertices[i].y, Vertices[i].z);
+        glVertex3f(Vertice.x, Vertice.y, Vertice.z);
     }
     glEnd();
 }
@@ -51,9 +51,9 @@ void Poligono::desenha_poligono()
 void Poligono::desenha_vertices()
 {
     glBegin(GL_POINTS);
-    for (int i = 0; i < Vertices.size(); i++)
+    for (auto &vertice : Vertices)
     {
-        glVertex3f(Vertices[i].x, Vertices[i].y, Vertices[i].z);
+        glVertex3f(vertice.x, vertice.y, vertice.z);
     }
     glEnd();
 }
@@ -68,9 +68,9 @@ void Poligono::desenha_vertice(int r, int g, int b, int pos)
 
 void Poligono::imprime()
 {
-    for (int i = 0; i < Vertices.size(); i++)
+    for (auto &vertice : Vertices)
     {
-        Vertices[i].imprime();
+        vertice.imprime();
     }
 }
 
