@@ -12,7 +12,8 @@
 #include <iostream>
 using namespace std;
 
-class Ponto {
+class Ponto
+{
 
 public:
 	float x, y, z;
@@ -27,5 +28,7 @@ public:
 
 Ponto get_min(Ponto p1, Ponto p2);
 Ponto get_max(Ponto p1, Ponto p2);
+int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double& s, double& t);
+bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n);
 
 #endif /* Ponto_hpp */

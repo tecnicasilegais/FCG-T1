@@ -79,7 +79,13 @@ Poligono uniao(Poligono a, Poligono b)
 }
 Poligono intersecao(Poligono a, Poligono b)
 {
+	for (int i = 0; i < a.size() - 1; i++)
+	{
+		if (ha_interseccao(a.get_vertice(i), a.get_vertice(i + 1), b.get_vertice(i), b.get_vertice(i + 1)))
+		{
 
+		}
+	}
 }
 Poligono diferenca(Poligono a, Poligono b)
 {

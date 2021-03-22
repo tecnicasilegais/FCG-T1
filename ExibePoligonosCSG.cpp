@@ -69,45 +69,6 @@ void ProdVetorial(Ponto v1, Ponto v2, Ponto& vresult)
 	vresult.y = v1.z * v2.x - (v1.x * v2.z);
 	vresult.z = v1.x * v2.y - (v1.y * v2.x);
 }
-/* ********************************************************************** */
-/*                                                                        */
-/*  Calcula a interseccao entre 2 retas (no plano "XY" Z = 0)             */
-/*                                                                        */
-/* k : ponto inicial da reta 1                                            */
-/* l : ponto final da reta 1                                              */
-/* m : ponto inicial da reta 2                                            */
-/* n : ponto final da reta 2                                              */
-/*                                                                        */
-/* s: valor do par‰metro no ponto de interse‹o (sobre a reta KL)         */
-/* t: valor do par‰metro no ponto de interse‹o (sobre a reta MN)         */
-/*                                                                        */
-/* ********************************************************************** */
-int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double& s, double& t)
-{
-	double det;
-
-	det = (n.x - m.x) * (l.y - k.y) - (n.y - m.y) * (l.x - k.x);
-
-	if (det == 0.0)
-		return 0; // n‹o h‡ intersec‹o
-
-	s = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
-	t = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
-
-	return 1; // h‡ intersec‹o
-}
-
-// **********************************************************************
-bool HaInterseccao(Ponto k, Ponto l, Ponto m, Ponto n)
-{
-	int ret;
-	double s, t;
-	ret = intersec2d(k, l, m, n, s, t);
-	if (!ret) return false;
-	if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
-		return true;
-	else return false;
-}
 // **********************************************************************
 //
 // **********************************************************************
