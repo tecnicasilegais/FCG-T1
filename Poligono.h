@@ -31,24 +31,24 @@ using namespace std;
 
 class Poligono
 {
-    vector <Ponto> Vertices;
-    Ponto min, max;
+	vector <Ponto> Vertices;
+	Ponto min, max;
 public:
-    Poligono();
-    Ponto get_vertice(int);
-    unsigned long size();
-    void insere_vertice(Ponto);
-    void desenha_poligono();
-    void desenha_vertices();
-    void desenha_vertice(int r, int g, int b, int pos);
-    void imprime();
-    void initialize(Ponto initial);
-    Ponto get_min();
-    Ponto get_max();
-    Poligono uniao(Poligono a, Poligono b);
-    Poligono intersecao(Poligono a, Poligono b);
-    Poligono diferenca(Poligono a, Poligono b);
-    int menorPosicao;
+	Poligono();
+	Ponto get_vertice(int);
+	unsigned long size();
+	void insere_vertice(Ponto);
+	void desenha_poligono();
+	void desenha_vertices();
+	void desenha_vertice(int r, int g, int b, int pos);
+	void imprime();
+	void initialize(Ponto initial);
+	Ponto get_min();
+	Ponto get_max();
+	Poligono uniao(Poligono a, Poligono b);
+	Poligono intersecao(Poligono a, Poligono b);
+	Poligono diferenca(Poligono a, Poligono b);
+	int menorPosicao;
 };
 
 #endif 

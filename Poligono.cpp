@@ -14,74 +14,74 @@ Poligono::Poligono()
 void Poligono::insere_vertice(Ponto p)
 {
 	if (p.x < min.x)
-        min.x = p.x;
-    if (p.x > max.x)
-        max.x = p.x;
-    if (p.y < min.y)
-        min.y = p.y;
-    if (p.y > max.y)
-        max.y= p.y;
-	
-    Vertices.push_back(p);
+		min.x = p.x;
+	if (p.x > max.x)
+		max.x = p.x;
+	if (p.y < min.y)
+		min.y = p.y;
+	if (p.y > max.y)
+		max.y = p.y;
+
+	Vertices.push_back(p);
 }
 
 Ponto Poligono::get_vertice(int i)
 {
-    return Vertices[i];
+	return Vertices[i];
 }
 void Poligono::desenha_poligono()
 {
-    glBegin(GL_LINE_LOOP);
-    for (int i=0; i<Vertices.size(); i++)
-        glVertex3f(Vertices[i].x,Vertices[i].y,Vertices[i].z);
-    glEnd();
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < Vertices.size(); i++)
+		glVertex3f(Vertices[i].x, Vertices[i].y, Vertices[i].z);
+	glEnd();
 }
 void Poligono::desenha_vertices()
 {
-    glBegin(GL_POINTS);
-    for (int i=0; i<Vertices.size(); i++)
-        glVertex3f(Vertices[i].x,Vertices[i].y,Vertices[i].z);
-    glEnd();
+	glBegin(GL_POINTS);
+	for (int i = 0; i < Vertices.size(); i++)
+		glVertex3f(Vertices[i].x, Vertices[i].y, Vertices[i].z);
+	glEnd();
 }
 void Poligono::desenha_vertice(int r, int g, int b, int pos)
 {
-    glColor3f(r, g, b); // R, G, B  [0..1]
-    glBegin(GL_POINTS);
-    glVertex3f(Vertices[pos].x, Vertices[pos].y, Vertices[pos].z);
-    glEnd();
+	glColor3f(r, g, b); // R, G, B  [0..1]
+	glBegin(GL_POINTS);
+	glVertex3f(Vertices[pos].x, Vertices[pos].y, Vertices[pos].z);
+	glEnd();
 }
 void Poligono::imprime()
 {
-    for (int i=0; i<Vertices.size(); i++)
-        Vertices[i].imprime();
+	for (int i = 0; i < Vertices.size(); i++)
+		Vertices[i].imprime();
 }
 unsigned long Poligono::size()
 {
-    return Vertices.size();
+	return Vertices.size();
 }
 void Poligono::initialize(Ponto initial)
 {
-    min = initial;
-    max = initial;
-    Vertices.push_back(initial);
+	min = initial;
+	max = initial;
+	Vertices.push_back(initial);
 }
 Ponto Poligono::get_min()
 {
-    return min;
+	return min;
 }
 Ponto Poligono::get_max()
 {
-    return max;
+	return max;
 }
 Poligono uniao(Poligono a, Poligono b)
 {
-	
+
 }
 Poligono intersecao(Poligono a, Poligono b)
 {
-	
+
 }
 Poligono diferenca(Poligono a, Poligono b)
 {
-	
+
 }
