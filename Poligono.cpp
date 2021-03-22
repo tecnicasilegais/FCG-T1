@@ -99,6 +99,8 @@ Ponto Poligono::get_max()
 Poligono uniao(Poligono a, Poligono b)
 {
 
+    Poligono p; //TODO: actual code required
+    return p;
 }
 
 Poligono intersecao(Poligono a, Poligono b)
@@ -107,12 +109,16 @@ Poligono intersecao(Poligono a, Poligono b)
     {
         if (ha_interseccao(a.get_vertice(i), a.get_vertice(i + 1), b.get_vertice(i), b.get_vertice(i + 1)))
         {
-
+            Poligono p; //TODO: actual code required
+            return p;
         }
     }
+    Poligono p; //TODO: actual code required
+    return p;
 }
 
 Poligono diferenca(Poligono a, Poligono b)
 {
-
+    Poligono p; //TODO: actual code required
+    return p;
 }
