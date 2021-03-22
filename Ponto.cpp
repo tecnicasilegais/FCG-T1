@@ -72,19 +72,16 @@ bool Ponto::operator==(const Ponto other) const
     return (x == other.x) && (y == other.y);
 }
 
-/* ********************************************************************** */
-/*                                                                        */
-/*  Calcula a intersecao entre 2 retas (no plano "XY" Z = 0)              */
-/*                                                                        */
-/* k : ponto inicial da reta 1                                            */
-/* l : ponto final da reta 1                                              */
-/* m : ponto inicial da reta 2                                            */
-/* n : ponto final da reta 2                                              */
-/*                                                                        */
-/* s: valor do parametro no ponto de intersecao (sobre a reta KL)         */
-/* t: valor do parametro no ponto de intersecao (sobre a reta MN)         */
-/*                                                                        */
-/* ********************************************************************** */
+/**
+ * Calcula a intersecao entre 2 retas, KL e MN (no plano "XY" Z = 0)
+ * @param k - ponto inicial da reta KL
+ * @param l - ponto final da reta KL
+ * @param m - ponto inicial da reta MN
+ * @param n - ponto final da reta MN
+ * @param s - guarda o valor do parametro no ponto de intersecao (sobre a reta KL)
+ * @param t - guarda o valor do parametro no ponto de intersecao (sobre a reta MN)
+ * @return 0 quando nao ha intersecao, 1 quando ha
+ */
 int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &s, double &t)
 {
     double det;
@@ -99,7 +96,7 @@ int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &s, double &t)
     s = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
     t = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
 
-    return 1; //ha intersecao
+    return 1; //ha intersecao
 }
 
 bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n)
@@ -114,4 +111,22 @@ bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n)
         return true;
     } else
     { return false; }
+}
+
+/**
+ * Calcula o produto escalar entre os vetores V1 e V2
+ */
+double prod_escalar(Ponto v1, Ponto v2)
+{
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
+/**
+ * Calcula o produto vetorial entre os vetores V1 e V2 e guarda em x,y,z de vResult
+ */
+void prod_vetorial(Ponto v1, Ponto v2, Ponto &vResult)
+{
+    vResult.x = v1.y * v2.z - (v1.z * v2.y);
+    vResult.y = v1.z * v2.x - (v1.x * v2.z);
+    vResult.z = v1.x * v2.y - (v1.y * v2.x);
 }

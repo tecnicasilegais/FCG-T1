@@ -20,7 +20,7 @@ public:
     float x, y, z;
     Ponto();
     Ponto(float x, float y, float z = 0);
-    bool operator==(const Ponto other) const;
+    bool operator==(Ponto other) const;
     void imprime();
     void multiply(double x, double y, double z);
     void set(float x, float y, float z = 0);

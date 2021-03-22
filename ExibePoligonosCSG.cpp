@@ -56,27 +56,9 @@ bool desenha = false;
 float angulo = 0.0;
 
 /**
- * Calcula o produto escalar entre os vetores V1 e V2
- */
-double ProdEscalar(Ponto v1, Ponto v2)
-{
-    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-}
-
-/**
- * Calcula o produto vetorial entre os vetores V1 e V2
- */
-void ProdVetorial(Ponto v1, Ponto v2, Ponto &vresult)
-{
-    vresult.x = v1.y * v2.z - (v1.z * v2.y);
-    vresult.y = v1.z * v2.x - (v1.x * v2.z);
-    vresult.z = v1.x * v2.y - (v1.y * v2.x);
-}
-
-/**
  * Le o arquivo nome e popula o poligono P
  */
-void LePoligono(const char* nome, Poligono &P)
+void le_poligono(const char* nome, Poligono &P)
 {
     ifstream input;
     input.open(nome, ios::in);
@@ -110,7 +92,6 @@ void LePoligono(const char* nome, Poligono &P)
 
 void init()
 {
-
     // Define a cor do fundo da tela (AZUL)
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
@@ -206,7 +187,7 @@ void reshape(int w, int h)
     glLoadIdentity();
 }
 
-void DesenhaEixos()
+void desenha_eixos()
 {
     glBegin(GL_LINES);
     //  eixo horizontal
@@ -293,7 +274,7 @@ void display(void)
  * Informa quantos frames se passaram no tempo informado.
  * @param tempo - Tempo em segundos
  */
-void ContaTempo(double tempo)
+void conta_tempo(double tempo)
 {
     Temporizador T;
 
@@ -311,14 +292,9 @@ void ContaTempo(double tempo)
     }
 
 }
-// **********************************************************************
-//  void keyboard ( unsigned char key, int x, int y )
-//
-// **********************************************************************
 
 void keyboard(unsigned char key, int x, int y)
 {
-
     switch (key)
     {
         case 27:        // Termina o programa qdo
@@ -335,11 +311,6 @@ void keyboard(unsigned char key, int x, int y)
     }
 }
 
-// **********************************************************************
-//  void arrow_keys ( int a_keys, int x, int y )
-//
-//
-// **********************************************************************
 void arrow_keys(int a_keys, int x, int y)
 {
     switch (a_keys)
@@ -357,10 +328,6 @@ void arrow_keys(int a_keys, int x, int y)
     }
 }
 
-// **********************************************************************
-//  void main ( int argc, char** argv )
-//
-// **********************************************************************
 int main(int argc, char** argv)
 {
     cout << "Programa OpenGL" << endl;

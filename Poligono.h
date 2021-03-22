@@ -34,7 +34,7 @@ class Poligono
     vector <Ponto> Vertices;
     Ponto min, max;
 public:
-    int menorPosicao;
+    int menorPosicao{};
     Poligono();
     unsigned long size();
     void desenha_poligono();
