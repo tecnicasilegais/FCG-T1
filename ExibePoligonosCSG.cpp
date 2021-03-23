@@ -98,7 +98,7 @@ void init()
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
     // Le o primeiro poligono
-    LePoligono("Retangulo.txt", A);
+    le_poligono("Retangulo.txt", A);
 
     cout << "\tMinimo:";
     A.get_min().imprime();
@@ -106,7 +106,7 @@ void init()
     A.get_max().imprime();
 
     // Le o segundo poligono
-    LePoligono("Triangulo.txt", B);
+    le_poligono("Triangulo.txt", B);
 
     cout << "\tMinimo:";
     B.get_min().imprime();
@@ -220,7 +220,7 @@ void display(void)
 
     glLineWidth(1);
     glColor3f(1, 1, 1); // R, G, B  [0..1]
-    DesenhaEixos();
+    desenha_eixos();
 
     //Desenha os dois poligonos no canto superior esquerdo
     glPushMatrix();
@@ -303,7 +303,7 @@ void keyboard(unsigned char key, int x, int y)
             exit(0);   // a tecla ESC for pressionada
             break;
         case 't':
-            ContaTempo(3);
+            conta_tempo(3);
             break;
         case ' ':
             desenha = !desenha;
