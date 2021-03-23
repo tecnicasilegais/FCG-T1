@@ -21,8 +21,10 @@
 using namespace std;
 
 #ifdef WIN32
+
 #include <windows.h>
 #include <GL/glut.h>
+
 #else
 
 #include <sys/time.h>

@@ -14,8 +14,10 @@
 using namespace std;
 
 #ifdef WIN32
+
 #include <windows.h>
 #include <GL/glut.h>
+
 #endif
 
 #ifdef __APPLE__
@@ -31,7 +33,7 @@ using namespace std;
 
 class Poligono
 {
-    vector <Ponto> Vertices;
+    vector<Ponto> Vertices;
     Ponto min, max;
 public:
     int menorPosicao{};

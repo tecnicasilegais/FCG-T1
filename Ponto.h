@@ -15,7 +15,6 @@ using namespace std;
 
 class Ponto
 {
-
 public:
     float x, y, z;
     Ponto();
