@@ -134,8 +134,8 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
                                            pontoIntersecao);
             if (haIntersecao)
             {
-                a.insere_vertice(i, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO: mudar para inserir no indice
-                b.insere_vertice(j, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO
+                a.insere_vertice(i+1, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO: mudar para inserir no indice
+                b.insere_vertice(j+1, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO
                 tamanhoA++;
                 tamanhoB++;
                 i++;

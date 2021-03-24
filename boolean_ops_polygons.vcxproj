@@ -153,6 +153,13 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\EstadoRS.txt" />
+    <Text Include="data\MeiaSeta.txt" />
+    <Text Include="data\PoligonoDeTeste.txt" />
+    <Text Include="data\Retangulo.txt" />
+    <Text Include="data\Triangulo.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

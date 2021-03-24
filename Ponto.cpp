@@ -6,6 +6,7 @@
 //  Copyright © 2020 Márcio Sarroglia Pinho. All rights reserved.
 //
 
+#include "math.h"
 #include "Ponto.h"
 
 Ponto::Ponto()
@@ -99,7 +100,8 @@ bool intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, Ponto &p)
 
     if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
     {
-        p = Ponto(k.x + (t * s1.x), k.y + (t * s1.y));
+        //p = Ponto(k.x + (t * s1.x), k.y + (t * s1.y));
+        p = Ponto(floor(k.x + (t * s1.x)), floor(k.y + (t * s1.y)));
         return true;
     }
     return false;

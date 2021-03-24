@@ -98,7 +98,7 @@ void init()
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
     // Le o primeiro poligono
-    le_poligono("Retangulo.txt", A);
+    le_poligono("data/Retangulo.txt", A);
 
     cout << "\tMinimo:";
     A.get_min().imprime();
@@ -106,7 +106,7 @@ void init()
     A.get_max().imprime();
 
     // Le o segundo poligono
-    le_poligono("Triangulo.txt", B);
+    le_poligono("data/Triangulo.txt", B);
 
     cout << "\tMinimo:";
     B.get_min().imprime();
@@ -131,7 +131,7 @@ void init()
 
     // Calcula 1/3 da largura da janela
     Terco = Largura;
-    double factor = 1.0 / 3.0;
+    const double factor = 1.0 / 3.0;
     Terco.multiply(factor, factor, factor);
 
     // Calcula 1/2 da largura da janela
@@ -139,6 +139,9 @@ void init()
     Meio.y = (Max.y + Min.y) / 2;
     Meio.z = (Max.z + Min.z) / 2;
 
+
+    encontrar_intersecoes(A, B);
+	
 }
 
 double nFrames = 0;
@@ -239,7 +242,6 @@ void display(void)
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 1, 0); // R, G, B  [0..1]
-    encontrar_intersecoes(A, B);
     A.desenha_poligono();
     glPopMatrix();
 

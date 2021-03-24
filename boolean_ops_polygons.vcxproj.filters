@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{d2f8ac43-ccdc-4249-ab58-b5a749a70be8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Poligono.h">
@@ -41,5 +44,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\MeiaSeta.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="data\EstadoRS.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="data\PoligonoDeTeste.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="data\Retangulo.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="data\Triangulo.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>
