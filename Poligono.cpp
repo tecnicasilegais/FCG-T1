@@ -7,9 +7,32 @@
 //
 
 #include "Poligono.h"
+#include "Ponto.h"
 
 Poligono::Poligono()
 = default;
+
+void Poligono::insere_vertice(int index, Ponto p)
+{
+    if (p.x < min.x)
+    {
+        min.x = p.x;
+    }
+    if (p.x > max.x)
+    {
+        max.x = p.x;
+    }
+    if (p.y < min.y)
+    {
+        min.y = p.y;
+    }
+    if (p.y > max.y)
+    {
+        max.y = p.y;
+    }
+
+    Vertices.insert(Vertices.begin() + index, p);
+}
 
 void Poligono::insere_vertice(Ponto p)
 {
@@ -105,14 +128,15 @@ void encontrar_intersecoes(Poligono a, Poligono b)
     {
         for (int j = 0; j < tamanhoB - 1; j++)
         {
-            double x, y;
-            bool intersec = ha_interseccao(a.get_vertice(i), a.get_vertice(i + 1),
-                                           b.get_vertice(j), b.get_vertice(j + 1),
-                                           x, y);
+            double x = 0;
+            double y = 0;
+            bool intersec = ha_intersecao(a.get_vertice(i), a.get_vertice(i + 1),
+                                          b.get_vertice(j), b.get_vertice(j + 1),
+                                          x, y);
             if (intersec)
             {
-                a.insere_vertice(Ponto(x, y, 0));//TODO: mudar para inserir no indice
-                b.insere_vertice(Ponto(x, y, 0));//TODO
+                a.insere_vertice(i, Ponto(x, y, 0));//TODO: mudar para inserir no indice
+                b.insere_vertice(j, Ponto(x, y, 0));//TODO
                 tamanhoA++;
                 tamanhoB++;
                 i++;

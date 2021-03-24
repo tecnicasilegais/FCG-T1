@@ -45,12 +45,15 @@ public:
     void imprime();
     void initialize(Ponto initial);
     void insere_vertice(Ponto);
+    void insere_vertice(int index, Ponto p);
     Ponto get_min();
     Ponto get_max();
     Ponto get_vertice(int);
-    Poligono diferenca(Poligono a, Poligono b);
-    Poligono intersecao(Poligono a, Poligono b);
-    Poligono uniao(Poligono a, Poligono b);
 };
+
+void encontrar_intersecoes(Poligono a, Poligono b);
+Poligono diferenca(Poligono a, Poligono b);
+Poligono intersecao(Poligono a, Poligono b);
+Poligono uniao(Poligono a, Poligono b);
 
 #endif 

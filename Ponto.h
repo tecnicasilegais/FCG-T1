@@ -26,7 +26,7 @@ public:
     void sum(double x, double y, double z);
 };
 
-bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y);
+bool ha_intersecao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y);
 int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y);
 Ponto get_min(Ponto p1, Ponto p2);
 Ponto get_max(Ponto p1, Ponto p2);

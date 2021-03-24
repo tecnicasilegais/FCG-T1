@@ -233,12 +233,13 @@ void display(void)
     B.desenha_poligono();
     glPopMatrix();
 
-    // Desenha o poligono A no meio, acima
+    // Desenha o poligono no meio, acima
     glPushMatrix();
     glTranslatef(Terco.x, Meio.y, 0);
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 1, 0); // R, G, B  [0..1]
+    encontrar_intersecoes(A, B);
     A.desenha_poligono();
     glPopMatrix();
 

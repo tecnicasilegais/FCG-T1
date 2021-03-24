@@ -85,21 +85,22 @@ bool Ponto::operator==(const Ponto other) const
 int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
 {
     double det;
-
-    det = (n.x - m.x) * (l.y - k.y) - (n.y - m.y) * (l.x - k.x);
+    Ponto s1 = Ponto(l.x - k.x, l.y - k.y);
+    Ponto s2 = Ponto(n.x - m.x, n.y - m.y);
+    det = (s2.x) * (s1.y) - (s2.y) * (s1.x);
 
     if (det == 0.0)
     {
         return 0;
     } //nao ha intersecao
 
-    x = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
-    y = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
+    x = ((s2.x) * (m.y - k.y) - (s2.y) * (m.x - k.x)) / det;
+    y = ((s1.x) * (m.y - k.y) - (s1.y) * (m.x - k.x)) / det;
 
     return 1; //ha intersecao
 }
 
-bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
+bool ha_intersecao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
 {
     int ret;
     ret = intersec2d(k, l, m, n, x, y);
