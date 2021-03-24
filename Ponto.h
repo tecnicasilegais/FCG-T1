@@ -27,7 +27,7 @@ public:
 };
 
 bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n);
-int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &s, double &t);
+int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y);
 Ponto get_min(Ponto p1, Ponto p2);
 Ponto get_max(Ponto p1, Ponto p2);
 

@@ -78,11 +78,11 @@ bool Ponto::operator==(const Ponto other) const
  * @param l - ponto final da reta KL
  * @param m - ponto inicial da reta MN
  * @param n - ponto final da reta MN
- * @param s - guarda o valor do parametro no ponto de intersecao (sobre a reta KL)
- * @param t - guarda o valor do parametro no ponto de intersecao (sobre a reta MN)
- * @return 0 quando nao ha intersecao, 1 quando ha
+ * @param x - guarda o valor de x do ponto de intersecao
+ * @param y - guarda o valor de y do ponto de intersecao
+ * @returns 0 quando nao ha intersecao, 1 quando ha
  */
-int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &s, double &t)
+int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
 {
     double det;
 
@@ -93,8 +93,8 @@ int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &s, double &t)
         return 0;
     } //nao ha intersecao
 
-    s = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
-    t = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
+    x = ((n.x - m.x) * (m.y - k.y) - (n.y - m.y) * (m.x - k.x)) / det;
+    y = ((l.x - k.x) * (m.y - k.y) - (l.y - k.y) * (m.x - k.x)) / det;
 
     return 1; //ha intersecao
 }
@@ -105,12 +105,17 @@ bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n)
     double s, t;
     ret = intersec2d(k, l, m, n, s, t);
     if (!ret)
-    { return false; }
+    {
+        return false;
+    }
     if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
     {
         return true;
-    } else
-    { return false; }
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /**
