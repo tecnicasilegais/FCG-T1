@@ -99,16 +99,15 @@ int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
     return 1; //ha intersecao
 }
 
-bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n)
+bool ha_interseccao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
 {
     int ret;
-    double s, t;
-    ret = intersec2d(k, l, m, n, s, t);
+    ret = intersec2d(k, l, m, n, x, y);
     if (!ret)
     {
         return false;
     }
-    if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
+    if (x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0)
     {
         return true;
     }

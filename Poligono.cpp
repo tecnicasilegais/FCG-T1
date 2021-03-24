@@ -96,6 +96,32 @@ Ponto Poligono::get_max()
     return max;
 }
 
+void encontrar_intersecoes(Poligono a, Poligono b)
+{
+    u_long tamanhoA = a.size();
+    u_long tamanhoB = b.size();
+
+    for (int i = 0; i < tamanhoA - 1; i++)
+    {
+        for (int j = 0; j < tamanhoB - 1; j++)
+        {
+            double x, y;
+            bool intersec = ha_interseccao(a.get_vertice(i), a.get_vertice(i + 1),
+                                           b.get_vertice(j), b.get_vertice(j + 1),
+                                           x, y);
+            if (intersec)
+            {
+                a.insere_vertice(Ponto(x, y, 0));//TODO: mudar para inserir no indice
+                b.insere_vertice(Ponto(x, y, 0));//TODO
+                tamanhoA++;
+                tamanhoB++;
+                i++;
+                j++;
+            }
+        }
+    }
+}
+
 Poligono uniao(Poligono a, Poligono b)
 {
 
@@ -105,14 +131,6 @@ Poligono uniao(Poligono a, Poligono b)
 
 Poligono intersecao(Poligono a, Poligono b)
 {
-    for (int i = 0; i < a.size() - 1; i++)
-    {
-        if (ha_interseccao(a.get_vertice(i), a.get_vertice(i + 1), b.get_vertice(i), b.get_vertice(i + 1)))
-        {
-            Poligono p; //TODO: actual code required
-            return p;
-        }
-    }
     Poligono p; //TODO: actual code required
     return p;
 }
