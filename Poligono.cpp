@@ -119,7 +119,7 @@ Ponto Poligono::get_max()
     return max;
 }
 
-void encontrar_intersecoes(Poligono a, Poligono b)
+void encontrar_intersecoes(Poligono &a, Poligono &b)
 {
     u_long tamanhoA = a.size();
     u_long tamanhoB = b.size();
@@ -128,15 +128,14 @@ void encontrar_intersecoes(Poligono a, Poligono b)
     {
         for (int j = 0; j < tamanhoB - 1; j++)
         {
-            double x = 0;
-            double y = 0;
-            bool intersec = ha_intersecao(a.get_vertice(i), a.get_vertice(i + 1),
-                                          b.get_vertice(j), b.get_vertice(j + 1),
-                                          x, y);
-            if (intersec)
+            Ponto pontoIntersecao = Ponto(0, 0);
+            bool haIntersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
+                                           b.get_vertice(j), b.get_vertice(j + 1),
+                                           pontoIntersecao);
+            if (haIntersecao)
             {
-                a.insere_vertice(i, Ponto(x, y, 0));//TODO: mudar para inserir no indice
-                b.insere_vertice(j, Ponto(x, y, 0));//TODO
+                a.insere_vertice(i, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO: mudar para inserir no indice
+                b.insere_vertice(j, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO
                 tamanhoA++;
                 tamanhoB++;
                 i++;

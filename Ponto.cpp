@@ -82,7 +82,7 @@ bool Ponto::operator==(const Ponto other) const
  * @param y - guarda o valor de y do ponto de intersecao
  * @returns 0 quando nao ha intersecao, 1 quando ha
  */
-int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
+bool intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, Ponto &p)
 {
     double det;
     Ponto s1 = Ponto(l.x - k.x, l.y - k.y);
@@ -91,31 +91,18 @@ int intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
 
     if (det == 0.0)
     {
-        return 0;
+        return false;
     } //nao ha intersecao
 
-    x = ((s2.x) * (m.y - k.y) - (s2.y) * (m.x - k.x)) / det;
-    y = ((s1.x) * (m.y - k.y) - (s1.y) * (m.x - k.x)) / det;
+    float s = ((s2.x) * (m.y - k.y) - (s2.y) * (m.x - k.x)) / det;
+    float t = ((s1.x) * (m.y - k.y) - (s1.y) * (m.x - k.x)) / det;
 
-    return 1; //ha intersecao
-}
-
-bool ha_intersecao(Ponto k, Ponto l, Ponto m, Ponto n, double &x, double &y)
-{
-    int ret;
-    ret = intersec2d(k, l, m, n, x, y);
-    if (!ret)
+    if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
     {
-        return false;
-    }
-    if (x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0)
-    {
+        p = Ponto(k.x + (t * s1.x), k.y + (t * s1.y));
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 
 /**

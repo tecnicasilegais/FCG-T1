@@ -51,7 +51,7 @@ public:
     Ponto get_vertice(int);
 };
 
-void encontrar_intersecoes(Poligono a, Poligono b);
+void encontrar_intersecoes(Poligono &a, Poligono &b);
 Poligono diferenca(Poligono a, Poligono b);
 Poligono intersecao(Poligono a, Poligono b);
 Poligono uniao(Poligono a, Poligono b);
