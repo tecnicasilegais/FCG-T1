@@ -9,6 +9,7 @@
 #include "Poligono.h"
 #include "Ponto.h"
 
+#include <chrono>
 Poligono::Poligono()
 = default;
 
@@ -162,4 +163,66 @@ Poligono diferenca(Poligono a, Poligono b)
 {
     Poligono p; //TODO: actual code required
     return p;
+}
+
+/// <summary>
+/// Classifica se o meio da aresta esta dentro ou fora do poligono
+/// </summary>
+/// <param name="pol">poligono a ser testado</param>
+/// <param name="ponto_medio"> centro da aresta </param>
+/// <param name="min"> limites inferiores da tela</param>
+/// <returns>true quando estiver dentro, false quando estiver fora do poligono</returns>
+bool classifica_aresta(Poligono& pol, Ponto& ponto_medio, Ponto& min)
+{
+    auto num_intersec = 0;
+    Ponto dummy(0, 0); //nao serao necessarias as coordenadas da intersecao
+    Ponto line(min.x, ponto_medio.y);
+    for (auto j = 0; j < pol.size() - 1; j++)
+    {
+        if (intersec2d(ponto_medio, line, pol.get_vertice(j), pol.get_vertice(j + 1), dummy))
+        {
+            if (j < pol.size() - 2)
+            {
+                if (!testa_mid_intersec(line, pol, j, j + 1, j + 2))
+                {
+                    num_intersec++;
+                }
+            }
+            else
+            {
+                if (!testa_mid_intersec(line, pol, j, j + 1, 0))
+                {
+                    num_intersec++;
+                }
+            }
+        }
+    }
+    if (intersec2d(ponto_medio, line, pol.get_vertice(pol.size() - 1), pol.get_vertice(0),dummy))
+    {
+        if (!testa_mid_intersec(line, pol, pol.size() - 1, 0, 1))
+        {
+            num_intersec++;
+        }
+    }
+    if (num_intersec % 2 == 0)
+    {
+        return false;
+    }
+    return true;
+}
+
+
+bool testa_mid_intersec(Ponto& line, Poligono& pol, int i, int j, int k)
+{
+    if (line.y == pol.get_vertice(j).y)
+    {
+        if ((pol.get_vertice(i).y < pol.get_vertice(j).y &&
+            pol.get_vertice(j).y < pol.get_vertice(k).y) || (
+                pol.get_vertice(i).y > pol.get_vertice(j).y &&
+                pol.get_vertice(j).y > pol.get_vertice(k).y))
+        {
+            return true;
+        }
+    }
+    return false;
 }
