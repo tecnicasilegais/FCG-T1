@@ -139,7 +139,6 @@ void init()
     Meio.y = (Max.y + Min.y) / 2;
     Meio.z = (Max.z + Min.z) / 2;
 
-
     encontrar_intersecoes(A, B);
 	
 }
