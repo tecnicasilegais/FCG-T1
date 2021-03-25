@@ -79,9 +79,8 @@ bool Ponto::operator==(const Ponto other) const
  * @param l - ponto final da reta KL
  * @param m - ponto inicial da reta MN
  * @param n - ponto final da reta MN
- * @param x - guarda o valor de x do ponto de intersecao
- * @param y - guarda o valor de y do ponto de intersecao
- * @returns 0 quando nao ha intersecao, 1 quando ha
+ * @param p - ponto de intersecao, caso haja
+ * @returns false quando nao ha intersecao, true quando ha
  */
 bool intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, Ponto &p)
 {
