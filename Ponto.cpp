@@ -88,20 +88,19 @@ bool intersec2d(Ponto k, Ponto l, Ponto m, Ponto n, Ponto &p)
     double det;
     Ponto s1 = Ponto(l.x - k.x, l.y - k.y);
     Ponto s2 = Ponto(n.x - m.x, n.y - m.y);
-    det = (s2.x) * (s1.y) - (s2.y) * (s1.x);
+    det = -(s2.x) * (s1.y) + (s1.x) * (s2.y);
 
     if (det == 0.0)
     {
         return false;
     } //nao ha intersecao
 
-    float s = ((s2.x) * (m.y - k.y) - (s2.y) * (m.x - k.x)) / det;
-    float t = ((s1.x) * (m.y - k.y) - (s1.y) * (m.x - k.x)) / det;
+    float s = (-(s1.y) * (k.x - m.x) + (s1.x) * (k.y - m.y)) / det;
+    float t = ((s2.x) * (k.y - m.y) - (s2.y) * (k.x - m.x)) / det;
 
     if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
     {
-        //p = Ponto(k.x + (t * s1.x), k.y + (t * s1.y));
-        p = Ponto(floor(k.x + (t * s1.x)), floor(k.y + (t * s1.y)));
+        p = Ponto(k.x + (t * s1.x), k.y + (t * s1.y));
         return true;
     }
     return false;
