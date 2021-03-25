@@ -45,9 +45,9 @@ using namespace std;
 #include "Temporizador.h"
 
 Temporizador T;
-double AccumDeltaT = 0;
+double accum_delta_t = 0;
 
-Poligono A, B, Uniao, Intersecao, Diferenca;
+Poligono A, B, Uniao, Intersecao, Diferenca_A_B, Diferenca_B_A;
 
 //Limites logicos da area de desenho
 Ponto Min, Max;
@@ -140,33 +140,35 @@ void init()
     Meio.z = (Max.z + Min.z) / 2;
 
     encontrar_intersecoes(A, B);
-	
+    Intersecao = intersecao(A, B);
+    Uniao = uniao(A, B);
+
 }
 
-double nFrames = 0;
-double TempoTotal = 0;
+double n_frames = 0;
+double tempo_total = 0;
 
 void animate()
 {
     double dt;
-    dt = T.getDeltaT();
-    AccumDeltaT += dt;
-    TempoTotal += dt;
-    nFrames++;
+    dt = T.get_delta_t();
+    accum_delta_t += dt;
+    tempo_total += dt;
+    n_frames++;
 
-    if (AccumDeltaT > 1.0 / 30) // fixa a atualizacao da tela em 30
+    if (accum_delta_t > 1.0 / 30) // fixa a atualizacao da tela em 30
     {
-        AccumDeltaT = 0;
+        accum_delta_t = 0;
         //angulo+=0.05;
         glutPostRedisplay();
     }
-    if (TempoTotal > 5.0)
+    if (tempo_total > 5.0)
     {
-        cout << "Tempo Acumulado: " << TempoTotal << " segundos. ";
-        cout << "Nros de Frames sem desenho: " << nFrames << endl;
-        cout << "FPS(sem desenho): " << nFrames / TempoTotal << endl;
-        TempoTotal = 0;
-        nFrames = 0;
+        cout << "Tempo Acumulado: " << tempo_total << " segundos. ";
+        cout << "Nros de Frames sem desenho: " << n_frames << endl;
+        cout << "FPS(sem desenho): " << n_frames / tempo_total << endl;
+        tempo_total = 0;
+        n_frames = 0;
     }
 }
 
@@ -241,7 +243,7 @@ void display(void)
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 1, 0); // R, G, B  [0..1]
-    A.desenha_poligono();
+    Uniao.desenha_poligono();
     glPopMatrix();
 
     // Desenha o poligono B no canto superior direito
@@ -250,7 +252,7 @@ void display(void)
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 0, 0); // R, G, B  [0..1]
-    B.desenha_poligono();
+    Intersecao.desenha_poligono();
     glPopMatrix();
 
     // Desenha o poligono A no canto inferior esquerdo
@@ -259,7 +261,7 @@ void display(void)
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 1, 0); // R, G, B  [0..1]
-    A.desenha_poligono();
+    Diferenca_A_B.desenha_poligono();
     glPopMatrix();
 
     // Desenha o poligono B no meio, abaixo
@@ -268,7 +270,7 @@ void display(void)
     glScalef(0.33, 0.5, 1);
     glLineWidth(2);
     glColor3f(1, 0, 0); // R, G, B  [0..1]
-    B.desenha_poligono();
+    Diferenca_B_A.desenha_poligono();
     glPopMatrix();
 
     glutSwapBuffers();
@@ -286,7 +288,7 @@ void conta_tempo(double tempo)
     cout << "Inicio contagem de " << tempo << "segundos ..." << flush;
     while (true)
     {
-        tempo -= T.getDeltaT();
+        tempo -= T.get_delta_t();
         cont++;
         if (tempo <= 0.0)
         {

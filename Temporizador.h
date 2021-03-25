@@ -30,7 +30,7 @@ class Temporizador
 #endif
 public:
     Temporizador(); // Inicializa o temporizador
-    double getDeltaT(); // Retorna o tempo decorrido desde a última chamada desta mesma função
+    double get_delta_t(); // Retorna o tempo decorrido desde a última chamada desta mesma função
 };
 
 #endif /* ControlaTempo_hpp */

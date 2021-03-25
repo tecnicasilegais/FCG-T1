@@ -10,6 +10,7 @@
 #include "Ponto.h"
 
 #include <chrono>
+
 Poligono::Poligono()
 = default;
 
@@ -122,23 +123,23 @@ Ponto Poligono::get_max()
 
 void encontrar_intersecoes(Poligono &a, Poligono &b)
 {
-    u_long tamanhoA = a.size();
-    u_long tamanhoB = b.size();
+    u_long tamanho_a = a.size();
+    u_long tamanho_b = b.size();
 
-    for (int i = 0; i < tamanhoA - 1; i++)
+    for (int i = 0; i < tamanho_a - 1; i++)
     {
-        for (int j = 0; j < tamanhoB - 1; j++)
+        for (int j = 0; j < tamanho_b - 1; j++)
         {
-            Ponto pontoIntersecao = Ponto(0, 0);
-            bool haIntersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
-                                           b.get_vertice(j), b.get_vertice(j + 1),
-                                           pontoIntersecao);
-            if (haIntersecao)
+            Ponto ponto_intersecao(0, 0);
+            bool ha_intersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
+                                            b.get_vertice(j), b.get_vertice(j + 1),
+                                            ponto_intersecao);
+            if (ha_intersecao)
             {
-                a.insere_vertice(i+1, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO: mudar para inserir no indice
-                b.insere_vertice(j+1, Ponto(pontoIntersecao.x, pontoIntersecao.y, 0));//TODO
-                tamanhoA++;
-                tamanhoB++;
+                a.insere_vertice(i + 1, ponto_intersecao);
+                b.insere_vertice(j + 1, ponto_intersecao);
+                tamanho_a++;
+                tamanho_b++;
                 i++;
                 j++;
             }
@@ -148,15 +149,64 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
 
 Poligono uniao(Poligono a, Poligono b)
 {
+    Ponto limite(0, 0);
+    Poligono uniao;
+    u_long tamanho_a = a.size();
+    for (int i = 0; i < tamanho_a - 1; i++)
+    {
+        Ponto ponto_medio((a.get_vertice(i).x + a.get_vertice(i + 1).x) / 2,
+                          (a.get_vertice(i).y + a.get_vertice(i + 1).y) / 2);
 
-    Poligono p; //TODO: actual code required
-    return p;
+        if (!ponto_dentro(ponto_medio, b, limite))
+        {
+            uniao.insere_vertice(a.get_vertice(i));
+            uniao.insere_vertice(a.get_vertice(i + 1));
+        }
+    }
+    u_long tamanho_b = b.size();
+    for (int i = 0; i < tamanho_b - 1; i++)
+    {
+        Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
+                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
+
+        if (!ponto_dentro(ponto_medio, a, limite))
+        {
+            uniao.insere_vertice(b.get_vertice(i));
+            uniao.insere_vertice(b.get_vertice(i + 1));
+        }
+    }
+    return uniao;
 }
 
 Poligono intersecao(Poligono a, Poligono b)
 {
-    Poligono p; //TODO: actual code required
-    return p;
+    Ponto limite(0, 0);
+    Poligono intersecao;
+    u_long tamanho_a = a.size();
+    for (int i = 0; i < tamanho_a - 1; i++)
+    {
+        Ponto ponto_medio((a.get_vertice(i).x + a.get_vertice(i + 1).x) / 2,
+                          (a.get_vertice(i).y + a.get_vertice(i + 1).y) / 2);
+
+        if (ponto_dentro(ponto_medio, b, limite))
+        {
+            intersecao.insere_vertice(a.get_vertice(i));
+            intersecao.insere_vertice(a.get_vertice(i + 1));
+        }
+    }
+    u_long tamanho_b = b.size();
+    for (int i = 0; i < tamanho_b - 1; i++)
+    {
+        Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
+                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
+
+        if (ponto_dentro(ponto_medio, a, limite))
+        {
+            intersecao.insere_vertice(b.get_vertice(i));
+            intersecao.insere_vertice(b.get_vertice(i + 1));
+        }
+    }
+    return intersecao;
 }
 
 Poligono diferenca(Poligono a, Poligono b)
@@ -165,41 +215,41 @@ Poligono diferenca(Poligono a, Poligono b)
     return p;
 }
 
-/// <summary>
-/// Classifica se o meio da aresta esta dentro ou fora do poligono
-/// </summary>
-/// <param name="pol">poligono a ser testado</param>
-/// <param name="ponto_medio"> centro da aresta </param>
-/// <param name="min"> limites inferiores da tela</param>
-/// <returns>true quando estiver dentro, false quando estiver fora do poligono</returns>
-bool classifica_aresta(Poligono& pol, Ponto& ponto_medio, Ponto& min)
+/**
+ * Classifica se o meio da aresta esta dentro ou fora do poligono
+ * @param ponto_medio - centro da aresta
+ * @param poligono - poligono a ser testado
+ * @param min - limites inferiores da tela
+ * @returns true quando estiver dentro, false quando estiver fora do poligono
+ */
+bool ponto_dentro(Ponto &ponto_medio, Poligono &poligono, Ponto &min)
 {
     auto num_intersec = 0;
     Ponto dummy(0, 0); //nao serao necessarias as coordenadas da intersecao
     Ponto line(min.x, ponto_medio.y);
-    for (auto j = 0; j < pol.size() - 1; j++)
+    for (auto j = 0; j < poligono.size() - 1; j++)
     {
-        if (intersec2d(ponto_medio, line, pol.get_vertice(j), pol.get_vertice(j + 1), dummy))
+        if (intersec2d(ponto_medio, line, poligono.get_vertice(j), poligono.get_vertice(j + 1), dummy))
         {
-            if (j < pol.size() - 2)
+            if (j < poligono.size() - 2)
             {
-                if (!testa_mid_intersec(line, pol, j, j + 1, j + 2))
+                if (!testa_mid_intersec(line, poligono, j, j + 1, j + 2))
                 {
                     num_intersec++;
                 }
             }
             else
             {
-                if (!testa_mid_intersec(line, pol, j, j + 1, 0))
+                if (!testa_mid_intersec(line, poligono, j, j + 1, 0))
                 {
                     num_intersec++;
                 }
             }
         }
     }
-    if (intersec2d(ponto_medio, line, pol.get_vertice(pol.size() - 1), pol.get_vertice(0),dummy))
+    if (intersec2d(ponto_medio, line, poligono.get_vertice(poligono.size() - 1), poligono.get_vertice(0), dummy))
     {
-        if (!testa_mid_intersec(line, pol, pol.size() - 1, 0, 1))
+        if (!testa_mid_intersec(line, poligono, poligono.size() - 1, 0, 1))
         {
             num_intersec++;
         }
@@ -211,15 +261,14 @@ bool classifica_aresta(Poligono& pol, Ponto& ponto_medio, Ponto& min)
     return true;
 }
 
-
-bool testa_mid_intersec(Ponto& line, Poligono& pol, int i, int j, int k)
+bool testa_mid_intersec(Ponto &line, Poligono &pol, int i, int j, int k)
 {
     if (line.y == pol.get_vertice(j).y)
     {
         if ((pol.get_vertice(i).y < pol.get_vertice(j).y &&
-            pol.get_vertice(j).y < pol.get_vertice(k).y) || (
-                pol.get_vertice(i).y > pol.get_vertice(j).y &&
-                pol.get_vertice(j).y > pol.get_vertice(k).y))
+             pol.get_vertice(j).y < pol.get_vertice(k).y) || (
+                    pol.get_vertice(i).y > pol.get_vertice(j).y &&
+                    pol.get_vertice(j).y > pol.get_vertice(k).y))
         {
             return true;
         }
