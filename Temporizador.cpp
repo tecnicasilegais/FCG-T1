@@ -21,7 +21,7 @@ Temporizador::Temporizador()
 }
 
 // Retorna o tempo decorrido desde a última chamada desta mesma função
-double Temporizador::getDeltaT()
+double Temporizador::get_delta_t()
 {
     double dt;
 

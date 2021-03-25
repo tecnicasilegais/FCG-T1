@@ -55,7 +55,7 @@ void encontrar_intersecoes(Poligono &a, Poligono &b);
 Poligono diferenca(Poligono a, Poligono b);
 Poligono intersecao(Poligono a, Poligono b);
 Poligono uniao(Poligono a, Poligono b);
-bool classifica_aresta(Poligono &pol, Ponto &ponto_medio, Ponto &min);
+bool ponto_dentro(Ponto &ponto_medio, Poligono &poligono, Ponto &min);
 bool testa_mid_intersec(Ponto &line, Poligono &mapa, int i, int j, int k);
 
 #endif 
