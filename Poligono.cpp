@@ -63,6 +63,17 @@ Ponto Poligono::get_vertice(int i)
     return Vertices[i];
 }
 
+int Poligono::index(Ponto p)
+{
+    auto it = find(Vertices.begin(), Vertices.end(), p);
+
+	if (it != Vertices.end())
+	{
+        return it - Vertices.begin();
+	}
+	return -1;
+}
+
 void Poligono::desenha_poligono()
 {
     glBegin(GL_LINE_LOOP);
@@ -166,13 +177,32 @@ Poligono uniao(Poligono a, Poligono b)
     u_long tamanho_b = b.size();
     for (int i = 0; i < tamanho_b - 1; i++)
     {
-        Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
-                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
+        Ponto bi = b.get_vertice(i);
+        Ponto bii = b.get_vertice(i + 1);
+        Ponto ponto_medio((bi.x + bii.x) / 2,
+                          (bi.y + bii.y) / 2);
 
         if (!ponto_dentro(ponto_medio, a, limite))
         {
-            uniao.insere_vertice(b.get_vertice(i));
-            uniao.insere_vertice(b.get_vertice(i + 1));
+            auto index_bii = uniao.index(bii);
+            auto index_bi = uniao.index(bi);
+            if (index_bii != -1 && index_bi != -1)
+            {
+                continue; //a aresta esta toda la?
+            }
+            if (index_bii != -1)
+            {
+                uniao.insere_vertice(index_bii, bi);
+            }
+            else if (index_bi != -1)
+            {
+                uniao.insere_vertice(index_bi + 1, bii);
+            }
+            else
+            {
+                uniao.insere_vertice(bi);
+                uniao.insere_vertice(bii);
+            }
         }
     }
     return uniao;
@@ -182,28 +212,49 @@ Poligono intersecao(Poligono a, Poligono b)
 {
     Ponto limite(0, 0);
     Poligono intersecao;
-    u_long tamanho_a = a.size();
-    for (int i = 0; i < tamanho_a - 1; i++)
-    {
-        Ponto ponto_medio((a.get_vertice(i).x + a.get_vertice(i + 1).x) / 2,
-                          (a.get_vertice(i).y + a.get_vertice(i + 1).y) / 2);
-
-        if (ponto_dentro(ponto_medio, b, limite))
-        {
-            intersecao.insere_vertice(a.get_vertice(i));
-            intersecao.insere_vertice(a.get_vertice(i + 1));
-        }
-    }
+	
     u_long tamanho_b = b.size();
     for (int i = 0; i < tamanho_b - 1; i++)
     {
         Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
-                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
+            (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
 
         if (ponto_dentro(ponto_medio, a, limite))
         {
             intersecao.insere_vertice(b.get_vertice(i));
             intersecao.insere_vertice(b.get_vertice(i + 1));
+        }
+    }
+    u_long tamanho_a = a.size();
+	
+    for (int i = 0; i < tamanho_a - 1; i++)
+    {
+        Ponto ai = a.get_vertice(i);
+        Ponto aii = a.get_vertice(i + 1);
+        Ponto ponto_medio((ai.x + aii.x) / 2,
+										(ai.y + aii.y) / 2);
+
+        if (ponto_dentro(ponto_medio, b, limite))
+        {
+            auto index_aii = intersecao.index(aii);
+            auto index_ai = intersecao.index(ai);
+        	if(index_aii != -1 && index_ai != -1)
+        	{
+                continue; //a aresta esta toda la?
+        	}
+        	if( index_aii != -1)
+        	{
+                intersecao.insere_vertice(index_aii, ai);
+        	}
+            else if(index_ai != -1)
+            {
+                intersecao.insere_vertice(index_ai + 1, aii);
+            }
+            else
+            {
+                intersecao.insere_vertice(ai);
+                intersecao.insere_vertice(aii);
+            }
         }
     }
     return intersecao;

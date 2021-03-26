@@ -39,6 +39,7 @@ public:
     int menorPosicao{};
     Poligono();
     unsigned long size();
+    int index(Ponto p);
     void desenha_poligono();
     void desenha_vertice(int r, int g, int b, int pos);
     void desenha_vertices();
