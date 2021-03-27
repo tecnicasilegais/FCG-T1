@@ -158,6 +158,7 @@
     <Text Include="data\MeiaSeta.txt" />
     <Text Include="data\PoligonoDeTeste.txt" />
     <Text Include="data\Retangulo.txt" />
+    <Text Include="data\triangulinho.txt" />
     <Text Include="data\Triangulo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

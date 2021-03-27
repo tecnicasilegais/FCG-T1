@@ -98,7 +98,8 @@ void init()
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
     // Le o primeiro poligono
-    le_poligono("data/Retangulo.txt", A);
+    //le_poligono("data/Retangulo.txt", A);
+    le_poligono("data/triangulinho.txt", A);
 
     cout << "\tMinimo:";
     A.get_min().imprime();
@@ -140,8 +141,10 @@ void init()
     Meio.z = (Max.z + Min.z) / 2;
 
     encontrar_intersecoes(A, B);
-    Intersecao = intersecao(A, B);
-    Uniao = uniao(A, B);
+    Intersecao = intersecao(A, B, Min);
+    Uniao = uniao(A, B, Min);
+    Diferenca_A_B = diferenca(A, B, Min);
+    Diferenca_B_A = diferenca(B, A, Min);
 
 }
 
