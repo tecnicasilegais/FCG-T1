@@ -9,6 +9,7 @@
 #include "Poligono.h"
 #include "Ponto.h"
 
+#include<bits/stdc++.h>
 #include <chrono>
 
 Poligono::Poligono()
@@ -65,7 +66,7 @@ Ponto Poligono::get_vertice(int i)
 
 int Poligono::index(Ponto p)
 {
-    auto it = find(Vertices.begin(), Vertices.end(), p);
+    auto it = std::find(Vertices.begin(), Vertices.end(), p);
 
 	if (it != Vertices.end())
 	{
@@ -155,6 +156,44 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
                 j++;
             }
         }
+        Ponto ponto_intersecao(0,0);
+        bool ha_intersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
+                                        b.get_vertice(tamanho_b-1), b.get_vertice(0),
+                                        ponto_intersecao);
+        if (ha_intersecao)
+        {
+            a.insere_vertice(i + 1, ponto_intersecao);
+            b.insere_vertice(0, ponto_intersecao);
+            tamanho_a++;
+            tamanho_b++;
+            i++;
+        }
+    }
+    for (int j = 0; j < tamanho_b - 1; j++)
+    {
+        Ponto ponto_intersecao(0, 0);
+        bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a-1), a.get_vertice(0),
+                                        b.get_vertice(j), b.get_vertice(j + 1),
+                                        ponto_intersecao);
+        if (ha_intersecao)
+        {
+            a.insere_vertice(0, ponto_intersecao);
+            b.insere_vertice(j + 1, ponto_intersecao);
+            tamanho_a++;
+            tamanho_b++;
+            j++;
+        }
+    }
+    Ponto ponto_intersecao(0,0);
+    bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a-1), a.get_vertice(0),
+                                    b.get_vertice(tamanho_b-1), b.get_vertice(0),
+                                    ponto_intersecao);
+    if (ha_intersecao)
+    {
+        a.insere_vertice(0, ponto_intersecao);
+        b.insere_vertice(0, ponto_intersecao);
+        tamanho_a++;
+        tamanho_b++;
     }
 }
 

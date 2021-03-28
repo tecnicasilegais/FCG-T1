@@ -99,7 +99,8 @@ void init()
 
     // Le o primeiro poligono
     //le_poligono("data/Retangulo.txt", A);
-    le_poligono("data/triangulinho.txt", A);
+    //le_poligono("data/triangulinho.txt", A);
+    le_poligono("data/LeftH.txt", A);
 
     cout << "\tMinimo:";
     A.get_min().imprime();
@@ -107,7 +108,8 @@ void init()
     A.get_max().imprime();
 
     // Le o segundo poligono
-    le_poligono("data/Triangulo.txt", B);
+    //le_poligono("data/Triangulo.txt", B);
+    le_poligono("data/RightH.txt", B);
 
     cout << "\tMinimo:";
     B.get_min().imprime();
