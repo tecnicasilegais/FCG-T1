@@ -39,6 +39,7 @@ public:
     int menorPosicao{};
     Poligono();
     unsigned long size();
+    int index(Ponto p);
     void desenha_poligono();
     void desenha_vertice(int r, int g, int b, int pos);
     void desenha_vertices();
@@ -52,9 +53,10 @@ public:
 };
 
 void encontrar_intersecoes(Poligono &a, Poligono &b);
-Poligono diferenca(Poligono a, Poligono b);
-Poligono intersecao(Poligono a, Poligono b);
-Poligono uniao(Poligono a, Poligono b);
+void insere_unico(Ponto);
+Poligono diferenca(Poligono &a, Poligono &b, Ponto &min);
+Poligono intersecao(Poligono &a, Poligono &b, Ponto &min);
+Poligono uniao(Poligono &a, Poligono &b, Ponto &min);
 bool ponto_dentro(Ponto &ponto_medio, Poligono &poligono, Ponto &min);
 bool testa_mid_intersec(Ponto &line, Poligono &mapa, int i, int j, int k);
 

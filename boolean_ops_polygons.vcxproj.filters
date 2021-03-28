@@ -61,5 +61,8 @@
     <Text Include="data\Triangulo.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="data\triangulinho.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>
