@@ -8,8 +8,9 @@
 
 #include "Poligono.h"
 #include "Ponto.h"
-
+#ifdef __linux__
 #include<bits/stdc++.h>
+#endif
 #include <chrono>
 
 Poligono::Poligono()
