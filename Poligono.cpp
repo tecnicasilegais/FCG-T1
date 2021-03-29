@@ -138,65 +138,27 @@ Ponto Poligono::get_max()
 
 void encontrar_intersecoes(Poligono &a, Poligono &b)
 {
-    u_long tamanho_a = a.size();
-    u_long tamanho_b = b.size();
+    int tamanho_a = a.size();
+    int tamanho_b = b.size();
 
-    for (int i = 0; i < tamanho_a - 1; i++)
+    for (int i = 0; i < tamanho_a; i++)
     {
-        for (int j = 0; j < tamanho_b - 1; j++)
+        for (int j = 0; j < tamanho_b; j++)
         {
             Ponto ponto_intersecao(0, 0);
-            bool ha_intersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
-                                            b.get_vertice(j), b.get_vertice(j + 1),
+            bool ha_intersecao = intersec2d(a.get_vertice(i % tamanho_a), a.get_vertice((i + 1) % tamanho_a),
+                                            b.get_vertice(j % tamanho_b), b.get_vertice((j + 1) % tamanho_b),
                                             ponto_intersecao);
             if (ha_intersecao)
             {
-                a.insere_vertice(i + 1, ponto_intersecao);
-                b.insere_vertice(j + 1, ponto_intersecao);
+                a.insere_vertice((i + 1) % tamanho_a, ponto_intersecao);
+                b.insere_vertice((j + 1) % tamanho_b, ponto_intersecao);
                 tamanho_a++;
                 tamanho_b++;
                 i++;
                 j++;
             }
         }
-        Ponto ponto_intersecao(0, 0);
-        bool ha_intersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
-                                        b.get_vertice(tamanho_b - 1), b.get_vertice(0),
-                                        ponto_intersecao);
-        if (ha_intersecao)
-        {
-            a.insere_vertice(i + 1, ponto_intersecao);
-            b.insere_vertice(0, ponto_intersecao);
-            tamanho_a++;
-            tamanho_b++;
-            i++;
-        }
-    }
-    for (int j = 0; j < tamanho_b - 1; j++)
-    {
-        Ponto ponto_intersecao(0, 0);
-        bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a - 1), a.get_vertice(0),
-                                        b.get_vertice(j), b.get_vertice(j + 1),
-                                        ponto_intersecao);
-        if (ha_intersecao)
-        {
-            a.insere_vertice(0, ponto_intersecao);
-            b.insere_vertice(j + 1, ponto_intersecao);
-            tamanho_a++;
-            tamanho_b++;
-            j++;
-        }
-    }
-    Ponto ponto_intersecao(0, 0);
-    bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a - 1), a.get_vertice(0),
-                                    b.get_vertice(tamanho_b - 1), b.get_vertice(0),
-                                    ponto_intersecao);
-    if (ha_intersecao)
-    {
-        a.insere_vertice(0, ponto_intersecao);
-        b.insere_vertice(0, ponto_intersecao);
-        tamanho_a++;
-        tamanho_b++;
     }
 }
 
