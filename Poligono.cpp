@@ -8,9 +8,11 @@
 
 #include "Poligono.h"
 #include "Ponto.h"
+
 #ifdef __linux__
 #include<bits/stdc++.h>
 #endif
+
 #include <chrono>
 
 Poligono::Poligono()
@@ -69,11 +71,11 @@ int Poligono::index(Ponto p)
 {
     auto it = std::find(Vertices.begin(), Vertices.end(), p);
 
-	if (it != Vertices.end())
-	{
+    if (it != Vertices.end())
+    {
         return it - Vertices.begin();
-	}
-	return -1;
+    }
+    return -1;
 }
 
 void Poligono::desenha_poligono()
@@ -157,9 +159,9 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
                 j++;
             }
         }
-        Ponto ponto_intersecao(0,0);
+        Ponto ponto_intersecao(0, 0);
         bool ha_intersecao = intersec2d(a.get_vertice(i), a.get_vertice(i + 1),
-                                        b.get_vertice(tamanho_b-1), b.get_vertice(0),
+                                        b.get_vertice(tamanho_b - 1), b.get_vertice(0),
                                         ponto_intersecao);
         if (ha_intersecao)
         {
@@ -173,7 +175,7 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
     for (int j = 0; j < tamanho_b - 1; j++)
     {
         Ponto ponto_intersecao(0, 0);
-        bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a-1), a.get_vertice(0),
+        bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a - 1), a.get_vertice(0),
                                         b.get_vertice(j), b.get_vertice(j + 1),
                                         ponto_intersecao);
         if (ha_intersecao)
@@ -185,9 +187,9 @@ void encontrar_intersecoes(Poligono &a, Poligono &b)
             j++;
         }
     }
-    Ponto ponto_intersecao(0,0);
-    bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a-1), a.get_vertice(0),
-                                    b.get_vertice(tamanho_b-1), b.get_vertice(0),
+    Ponto ponto_intersecao(0, 0);
+    bool ha_intersecao = intersec2d(a.get_vertice(tamanho_a - 1), a.get_vertice(0),
+                                    b.get_vertice(tamanho_b - 1), b.get_vertice(0),
                                     ponto_intersecao);
     if (ha_intersecao)
     {
@@ -259,12 +261,12 @@ Poligono uniao(Poligono &a, Poligono &b, Ponto &min)
 Poligono intersecao(Poligono &a, Poligono &b, Ponto &min)
 {
     Poligono intersecao;
-	
+
     u_long tamanho_b = b.size();
     for (int i = 0; i < tamanho_b - 1; i++)
     {
         Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
-            (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
+                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
 
         if (ponto_dentro(ponto_medio, a, min))
         {
@@ -273,27 +275,27 @@ Poligono intersecao(Poligono &a, Poligono &b, Ponto &min)
         }
     }
     u_long tamanho_a = a.size();
-	
+
     for (int i = 0; i < tamanho_a - 1; i++)
     {
         Ponto ai = a.get_vertice(i);
         Ponto aii = a.get_vertice(i + 1);
         Ponto ponto_medio((ai.x + aii.x) / 2,
-										(ai.y + aii.y) / 2);
+                          (ai.y + aii.y) / 2);
 
         if (ponto_dentro(ponto_medio, b, min))
         {
             auto index_aii = intersecao.index(aii);
             auto index_ai = intersecao.index(ai);
-        	if(index_aii != -1 && index_ai != -1)
-        	{
+            if (index_aii != -1 && index_ai != -1)
+            {
                 continue; //a aresta esta toda la?
-        	}
-        	if( index_aii != -1)
-        	{
+            }
+            if (index_aii != -1)
+            {
                 intersecao.insere_vertice(index_aii, ai);
-        	}
-            else if(index_ai != -1)
+            }
+            else if (index_ai != -1)
             {
                 intersecao.insere_vertice(index_ai + 1, aii);
             }
@@ -314,29 +316,29 @@ Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
     u_long tamanho_a = a.size();
     u_long tamanho_b = b.size();
 
-    for (int i=0; i < tamanho_a -1; i++)
+    for (int i = 0; i < tamanho_a - 1; i++)
     {
         Ponto a_i = a.get_vertice(i);
         Ponto a_ii = a.get_vertice(i + 1);
 
-        Ponto p_medio((a_i.x + a_ii.x) / 2, (a_i.y + a_ii.y)/2);
+        Ponto p_medio((a_i.x + a_ii.x) / 2, (a_i.y + a_ii.y) / 2);
 
-    	if(!ponto_dentro(p_medio, b, min))
-    	{
-	        insere_unico(diferenca, a_i);
-	        insere_unico(diferenca, a_ii);
-        }
-    	else
+        if (!ponto_dentro(p_medio, b, min))
         {
-	        //pontos dentro de B que nao forem de intersecao nao devem ser incluidos
-	        if(b.index(a_i) != -1) //poligono B tambem contem o ponto a(i), eh ponto de intersecao
-	        {
-		        insere_unico(diferenca, a_i);
-	        }
-	        if(b.index(a_ii) != -1) // poligono B tambem contem o ponto a(i+1), eh ponto intersec
-	        {
-		        insere_unico(diferenca, a_ii);
-	        }
+            insere_unico(diferenca, a_i);
+            insere_unico(diferenca, a_ii);
+        }
+        else
+        {
+            //pontos dentro de B que nao forem de intersecao nao devem ser incluidos
+            if (b.index(a_i) != -1) //poligono B tambem contem o ponto a(i), eh ponto de intersecao
+            {
+                insere_unico(diferenca, a_i);
+            }
+            if (b.index(a_ii) != -1) // poligono B tambem contem o ponto a(i+1), eh ponto intersec
+            {
+                insere_unico(diferenca, a_ii);
+            }
         }
     }
 
@@ -345,7 +347,7 @@ Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
         Ponto b_i = b.get_vertice(i);
         Ponto b_ii = b.get_vertice(i + 1);
         Ponto p_medio((b_i.x + b_ii.x) / 2,
-								(b_i.y + b_ii.y) / 2);
+                      (b_i.y + b_ii.y) / 2);
 
         if (ponto_dentro(p_medio, a, min))
         {
@@ -355,7 +357,7 @@ Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
             {
                 continue; //a aresta esta toda la?
             }
-        	//logica inversa aa da intersecao
+            //logica inversa aa da intersecao
             if (index_bii != -1)
             {
                 diferenca.insere_vertice(index_bii + 1, b_i);
