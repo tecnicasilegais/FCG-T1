@@ -1,0 +1,12 @@
+{
+  "input": {
+    "A": "tri_prob.txt",
+    "B": "quad_prob.txt"
+  },
+  "output": {
+    "uniao": "output/triquad_union.txt",
+    "intersecao": "output/triquad_intersec.txt",
+    "diffab": "output/triquad_diff-ab.txt",
+    "diffba": "output/triquad_diff-ba.txt"
+  }
+}

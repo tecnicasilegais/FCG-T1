@@ -8,17 +8,15 @@
 // pinho@pucrs.br
 // **********************************************************************
 
-// Para uso no Xcode:
-// Abra o menu Product -> Scheme -> Edit Scheme -> Use custom working directory
-// Selecione a pasta onde voce descompactou o ZIP que continha este arquivo.
-//
 
 #include <iostream>
 #include <cmath>
 #include <ctime>
 #include <fstream>
+#include <json/json.hpp>
 
 using namespace std;
+using json = nlohmann::json;
 
 #ifdef WIN32
 
@@ -47,6 +45,7 @@ using namespace std;
 Temporizador T;
 double accum_delta_t = 0;
 
+//declarando poligonos que serao utilizados
 Poligono A, B, Uniao, Intersecao, Diferenca_A_B, Diferenca_B_A;
 
 //Limites logicos da area de desenho
@@ -57,10 +56,13 @@ bool desenha = false;
 
 float angulo = 0.0;
 
+const string f_path = "data/";
+json configs;
+
 /**
  * Le o arquivo nome e popula o poligono P
  */
-void le_poligono(const char* nome, Poligono &P)
+void le_poligono(const string nome, Poligono &P)
 {
     ifstream input;
     input.open(nome, ios::in);
@@ -92,6 +94,37 @@ void le_poligono(const char* nome, Poligono &P)
 
 }
 
+void escreve_poligono(const string nome, Poligono &pol)
+{
+    ofstream output(nome);
+    if (output.is_open())
+    {
+        output << pol.size() << endl;
+        for(auto i=0; i<pol.size(); i++){
+            Ponto pon = pol.get_vertice(i);
+            output << pon.x << " " << pon.y << endl;
+        }
+        output.close();
+    }
+    else cout << "error opening file" << nome << endl;
+
+}
+
+void escreve_poligonos()
+{
+    //escreve os 4 poligonos nos arquivos de destino pre-configurados
+    escreve_poligono(f_path + configs["output"]["uniao"].get<string>(), Uniao);
+    escreve_poligono(f_path + configs["output"]["intersecao"].get<string>(), Intersecao);
+    escreve_poligono(f_path + configs["output"]["diffab"].get<string>(), Diferenca_A_B);
+    escreve_poligono(f_path + configs["output"]["diffba"].get<string>(), Diferenca_B_A);
+}
+
+void carrega_config(string config)
+{
+    ifstream ifs(config);
+    configs = json::parse(ifs);
+}
+
 void init()
 {
 
@@ -99,21 +132,18 @@ void init()
     // Define a cor do fundo da tela (AZUL)
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
-    // Le o primeiro poligono
-    //le_poligono("data/Retangulo.txt", A);
-    //le_poligono("data/triangulinho.txt", A);
-    le_poligono("data/Triangulo.txt", A);
-    //le_poligono("data/LeftH.txt", A);
+
+    //carrega arquivo de configurações na variavel configs
+    carrega_config(f_path + "config.json");
+
+    le_poligono(f_path + configs["input"]["A"].get<string>(), A);
 
     cout << "\tMinimo:";
     A.get_min().imprime();
     cout << "\tMaximo:";
     A.get_max().imprime();
 
-    // Le o segundo poligono
-    //le_poligono("data/Triangulo.txt", B);
-    le_poligono("data/triangulinho.txt", B);
-    //le_poligono("data/RightH.txt", B);
+    le_poligono(f_path + configs["input"]["B"].get<string>(), B);
 
     cout << "\tMinimo:";
     B.get_min().imprime();
@@ -151,6 +181,8 @@ void init()
     Uniao = uniao(A, B, Min);
     Diferenca_A_B = diferenca(A, B, Min);
     Diferenca_B_A = diferenca(B, A, Min);
+
+    escreve_poligonos();
 
 }
 
