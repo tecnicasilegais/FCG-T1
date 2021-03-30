@@ -16,6 +16,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{d2f8ac43-ccdc-4249-ab58-b5a749a70be8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data\output">
+      <UniqueIdentifier>{4ea81ba3-7ced-4e74-9cfc-3461eccc4532}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Poligono.h">
@@ -44,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="data\config.json">
+      <Filter>data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="data\MeiaSeta.txt">

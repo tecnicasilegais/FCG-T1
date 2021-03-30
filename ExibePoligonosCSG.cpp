@@ -13,16 +13,13 @@
 #include <cmath>
 #include <ctime>
 #include <fstream>
-#include <json/json.hpp>
 
 using namespace std;
-using json = nlohmann::json;
-
 #ifdef WIN32
 
 #include <windows.h>
 #include <GL/glut.h>
-
+#include <nlohmann/json.hpp>
 #else
 
 #include <sys/time.h>
@@ -31,16 +28,20 @@ using json = nlohmann::json;
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
+#include "json/json.hpp"
 #endif
 
 #ifdef __linux__
 #include <GL/glut.h>
+#include "json/json.hpp"
 #endif
 
 #include "Ponto.h"
 #include "Poligono.h"
 
 #include "Temporizador.h"
+
+using json = nlohmann::json;
 
 Temporizador T;
 double accum_delta_t = 0;
