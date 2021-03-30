@@ -100,8 +100,9 @@ void init()
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
     // Le o primeiro poligono
-    le_poligono("data/Retangulo.txt", A);
+    //le_poligono("data/Retangulo.txt", A);
     //le_poligono("data/triangulinho.txt", A);
+    le_poligono("data/Triangulo.txt", A);
     //le_poligono("data/LeftH.txt", A);
 
     cout << "\tMinimo:";
@@ -110,7 +111,8 @@ void init()
     A.get_max().imprime();
 
     // Le o segundo poligono
-    le_poligono("data/Triangulo.txt", B);
+    //le_poligono("data/Triangulo.txt", B);
+    le_poligono("data/triangulinho.txt", B);
     //le_poligono("data/RightH.txt", B);
 
     cout << "\tMinimo:";
