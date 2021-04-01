@@ -56,7 +56,6 @@ void classifica_arestas(Poligono &a, Poligono &b, Ponto &min, vector<bool>& aa, 
 void encontrar_intersecoes(Poligono &a, Poligono &b);
 void insere_unico(Poligono &pol, Ponto p);
 bool insere_unico(Poligono &pol, int index, Ponto p);
-Poligono diferenca(Poligono &a, Poligono &b, Ponto &min, vector<bool> &aa, vector<bool> &ab);
 Poligono diferenca(Poligono &a, Poligono &b, vector<bool> &aa, vector<bool> &ab);
 Poligono intersecao(Poligono &a, Poligono &b, vector<bool> &aa, vector<bool> &ab);
 Poligono uniao(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab);

@@ -187,8 +187,7 @@ void init()
 
     Intersecao = intersecao(A, B, aa, ab);
     Uniao = uniao(A, B, aa, ab);
-    Diferenca_A_B = diferenca(A, B, Min,aa, ab);
-    //Diferenca_B_A = diferenca(B, A, Min, aa, ab);
+    Diferenca_A_B = diferenca(A, B, aa, ab);
     Diferenca_B_A = diferenca(B, A, ab, aa);
 
     escreve_poligonos();

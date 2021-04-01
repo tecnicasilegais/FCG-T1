@@ -1,7 +1,7 @@
 {
   "input": {
-    "A": "triangulinho.txt",
-    "B": "Retangulo.txt"
+    "A": "RightH.txt",
+    "B": "LeftH.txt"
   },
   "output": {
     "uniao": "output/union_out.txt",
