@@ -131,7 +131,7 @@ void init()
 
 
     // Define a cor do fundo da tela (AZUL)
-    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 
     //carrega arquivo de configurações na variavel configs
@@ -177,11 +177,19 @@ void init()
     Meio.y = (Max.y + Min.y) / 2;
     Meio.z = (Max.z + Min.z) / 2;
 
+    // Encontra Pontos de interseção entre A e B
     encontrar_intersecoes(A, B);
-    Intersecao = intersecao(A, B, Min);
-    Uniao = uniao(A, B, Min);
-    Diferenca_A_B = diferenca(A, B, Min);
-    Diferenca_B_A = diferenca(B, A, Min);
+
+    // Classifica arestas (dentro ou fora) entre os dois poligonos
+    vector<bool> aa, ab;
+    classifica_arestas(A, B, Min, aa, ab);
+
+
+    Intersecao = intersecao(A, B, aa, ab);
+    Uniao = uniao(A, B, aa, ab);
+    Diferenca_A_B = diferenca(A, B, Min,aa, ab);
+    //Diferenca_B_A = diferenca(B, A, Min, aa, ab);
+    Diferenca_B_A = diferenca(B, A, ab, aa);
 
     escreve_poligonos();
 

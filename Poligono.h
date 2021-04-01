@@ -52,11 +52,14 @@ public:
     Ponto get_vertice(int);
 };
 
+void classifica_arestas(Poligono &a, Poligono &b, Ponto &min, vector<bool>& aa, vector<bool>& ab);
 void encontrar_intersecoes(Poligono &a, Poligono &b);
-void insere_unico(Ponto);
-Poligono diferenca(Poligono &a, Poligono &b, Ponto &min);
-Poligono intersecao(Poligono &a, Poligono &b, Ponto &min);
-Poligono uniao(Poligono &a, Poligono &b, Ponto &min);
+void insere_unico(Poligono &pol, Ponto p);
+bool insere_unico(Poligono &pol, int index, Ponto p);
+Poligono diferenca(Poligono &a, Poligono &b, Ponto &min, vector<bool> &aa, vector<bool> &ab);
+Poligono diferenca(Poligono &a, Poligono &b, vector<bool> &aa, vector<bool> &ab);
+Poligono intersecao(Poligono &a, Poligono &b, vector<bool> &aa, vector<bool> &ab);
+Poligono uniao(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab);
 bool ponto_dentro(Ponto &ponto_medio, Poligono &poligono, Ponto &min);
 bool testa_mid_intersec(Ponto &line, Poligono &mapa, int i, int j, int k);
 

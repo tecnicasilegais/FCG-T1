@@ -136,27 +136,40 @@ Ponto Poligono::get_max()
     return max;
 }
 
+void classifica_arestas(Poligono &a, Poligono &b, Ponto &min, vector<bool>& aa, vector<bool>& ab)
+{
+    for(int i = 0; i < a.size(); i++)
+    {
+        auto a_i = a.get_vertice(i);
+        auto a_ii = a.get_vertice((i+1) % a.size());
+        Ponto ponto_medio((a_i.x + a_ii.x) / 2, (a_i.y + a_ii.y) / 2);
+        aa.push_back(ponto_dentro(ponto_medio, b, min));
+    }
+
+    for(int i = 0; i < b.size(); i++)
+    {
+        auto b_i = b.get_vertice(i);
+        auto b_ii = b.get_vertice((i+1) % b.size());
+        Ponto ponto_medio((b_i.x + b_ii.x) / 2, (b_i.y + b_ii.y) / 2);
+        ab.push_back(ponto_dentro(ponto_medio, a, min));
+    }
+}
+
 void encontrar_intersecoes(Poligono &a, Poligono &b)
 {
-    int tamanho_a = a.size();
-    int tamanho_b = b.size();
 
-    for (int i = 0; i < tamanho_a; i++)
+    for (int i = 0; i < a.size(); i++)
     {
-        for (int j = 0; j < tamanho_b; j++)
+        for (int j = 0; j < b.size(); j++)
         {
             Ponto ponto_intersecao(0, 0);
-            bool ha_intersecao = intersec2d(a.get_vertice(i % tamanho_a), a.get_vertice((i + 1) % tamanho_a),
-                                            b.get_vertice(j % tamanho_b), b.get_vertice((j + 1) % tamanho_b),
+            bool ha_intersecao = intersec2d(a.get_vertice(i ), a.get_vertice((i + 1) % a.size()),
+                                            b.get_vertice(j), b.get_vertice((j + 1) % b.size()),
                                             ponto_intersecao);
             if (ha_intersecao)
             {
-                a.insere_vertice((i + 1) % tamanho_a, ponto_intersecao);
-                b.insere_vertice((j + 1) % tamanho_b, ponto_intersecao);
-                tamanho_a++;
-                tamanho_b++;
-                i++;
-                j++;
+                insere_unico(a, (i + 1) , ponto_intersecao);
+                insere_unico(b, (j + 1) , ponto_intersecao);
             }
         }
     }
@@ -171,117 +184,126 @@ void insere_unico(Poligono &pol, Ponto p)
     pol.insere_vertice(p);
 }
 
-Poligono uniao(Poligono &a, Poligono &b, Ponto &min)
+bool insere_unico(Poligono &pol, int index, Ponto p)
+{
+    if (pol.index(p) != -1)
+    {
+        return false;
+    }
+    pol.insere_vertice(index, p);
+    return true;
+}
+
+Poligono uniao(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab)
 {
     Poligono uniao;
-    u_long tamanho_a = a.size();
-    for (int i = 0; i < tamanho_a - 1; i++)
+    for (int i = 0; i < a.size(); i++)
     {
-        Ponto ponto_medio((a.get_vertice(i).x + a.get_vertice(i + 1).x) / 2,
-                          (a.get_vertice(i).y + a.get_vertice(i + 1).y) / 2);
-
-        if (!ponto_dentro(ponto_medio, b, min))
+        if (!aa[i])
         {
-            uniao.insere_vertice(a.get_vertice(i));
-            uniao.insere_vertice(a.get_vertice(i + 1));
+            insere_unico(uniao, a.get_vertice(i % a.size()));
+            insere_unico(uniao, a.get_vertice((i + 1) % a.size()));
         }
     }
-    u_long tamanho_b = b.size();
-    for (int i = 0; i < tamanho_b - 1; i++)
-    {
-        Ponto bi = b.get_vertice(i);
-        Ponto bii = b.get_vertice(i + 1);
-        Ponto ponto_medio((bi.x + bii.x) / 2,
-                          (bi.y + bii.y) / 2);
 
-        if (!ponto_dentro(ponto_medio, a, min))
+    int ab_actual = 0;
+    int ab_false_count = 0;
+    int i=0;
+    for (int i=0; i< ab.size(); i++){
+        if(!ab[i])
+            ab_false_count++;
+    }
+    while(ab_actual < ab_false_count)
+    {
+        Ponto b_i = b.get_vertice(i % b.size());
+        Ponto b_ii = b.get_vertice((i + 1) % b.size());
+        if (!ab[i % b.size()])
         {
-            auto index_bii = uniao.index(bii);
-            auto index_bi = uniao.index(bi);
+            auto index_bii = uniao.index(b_ii);
+            auto index_bi = uniao.index(b_i);
             if (index_bii != -1 && index_bi != -1)
             {
+                ab_actual++;
                 continue; //a aresta esta toda la?
             }
             if (index_bii != -1)
             {
-                uniao.insere_vertice(index_bii, bi);
+                uniao.insere_vertice(index_bii, b_i);
+                ab_actual++;
             }
             else if (index_bi != -1)
             {
-                uniao.insere_vertice(index_bi + 1, bii);
-            }
-            else
-            {
-                uniao.insere_vertice(bi);
-                uniao.insere_vertice(bii);
+                uniao.insere_vertice(index_bi + 1, b_ii);
+                ab_actual++;
             }
         }
+        i++;
     }
     return uniao;
 }
 
-Poligono intersecao(Poligono &a, Poligono &b, Ponto &min)
+Poligono intersecao(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab)
 {
     Poligono intersecao;
 
-    u_long tamanho_b = b.size();
-    for (int i = 0; i < tamanho_b - 1; i++)
+    for (int i = 0; i < b.size(); i++)
     {
-        Ponto ponto_medio((b.get_vertice(i).x + b.get_vertice(i + 1).x) / 2,
-                          (b.get_vertice(i).y + b.get_vertice(i + 1).y) / 2);
-
-        if (ponto_dentro(ponto_medio, a, min))
+        if (ab[i])
         {
             intersecao.insere_vertice(b.get_vertice(i));
-            intersecao.insere_vertice(b.get_vertice(i + 1));
+            intersecao.insere_vertice(b.get_vertice((i + 1) % b.size()));
         }
     }
-    u_long tamanho_a = a.size();
 
-    for (int i = 0; i < tamanho_a - 1; i++)
+    int aa_actual = 0;
+    int aa_true_count = 0;
+    int i=0;
+    for (int i=0; i< aa.size(); i++){
+        if(!aa[i])
+            aa_true_count++;
+    }
+    while(aa_actual < aa_true_count)
+    //for (int i = 0; i < a.size(); i++)
     {
-        Ponto ai = a.get_vertice(i);
-        Ponto aii = a.get_vertice(i + 1);
-        Ponto ponto_medio((ai.x + aii.x) / 2,
-                          (ai.y + aii.y) / 2);
+        Ponto a_i = a.get_vertice(i % a.size());
+        Ponto a_ii = a.get_vertice((i + 1) % a.size());
 
-        if (ponto_dentro(ponto_medio, b, min))
+        if (aa[i % a.size()])
         {
-            auto index_aii = intersecao.index(aii);
-            auto index_ai = intersecao.index(ai);
+            auto index_aii = intersecao.index(a_ii);
+            auto index_ai = intersecao.index(a_i);
             if (index_aii != -1 && index_ai != -1)
             {
+                aa_actual++; //aresta ja estava incluida
                 continue; //a aresta esta toda la?
             }
             if (index_aii != -1)
             {
-                intersecao.insere_vertice(index_aii, ai);
+                intersecao.insere_vertice(index_aii, a_i);
+                aa_actual++;
             }
             else if (index_ai != -1)
             {
-                intersecao.insere_vertice(index_ai + 1, aii);
-            }
-            else
-            {
-                intersecao.insere_vertice(ai);
-                intersecao.insere_vertice(aii);
+                intersecao.insere_vertice(index_ai + 1, a_ii);
+                aa_actual++;
             }
         }
+        i++;
     }
     return intersecao;
 }
 
-Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
+Poligono diferenca(Poligono &a, Poligono &b, Ponto &min, vector<bool>& aa, vector<bool>& ab)
 {
     Poligono diferenca;  //a - b
 
     u_long tamanho_a = a.size();
     u_long tamanho_b = b.size();
 
-    for (int i = 0; i < tamanho_a - 1; i++)
+    for (int i = 0; i < tamanho_a; i++)
     {
         Ponto a_i = a.get_vertice(i);
-        Ponto a_ii = a.get_vertice(i + 1);
+        Ponto a_ii = a.get_vertice((i + 1) % tamanho_a);
 
         Ponto p_medio((a_i.x + a_ii.x) / 2, (a_i.y + a_ii.y) / 2);
 
@@ -304,10 +326,10 @@ Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
         }
     }
 
-    for (int i = 0; i < tamanho_b - 1; i++)
+    for (int i = 0; i < tamanho_b; i++)
     {
         Ponto b_i = b.get_vertice(i);
-        Ponto b_ii = b.get_vertice(i + 1);
+        Ponto b_ii = b.get_vertice((i + 1) % tamanho_b);
         Ponto p_medio((b_i.x + b_ii.x) / 2,
                       (b_i.y + b_ii.y) / 2);
 
@@ -334,6 +356,73 @@ Poligono diferenca(Poligono &a, Poligono &b, Ponto &min)
                 diferenca.insere_vertice(b_ii);
             }
         }
+    }
+    return diferenca;
+}
+
+
+Poligono diferenca(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab)
+{
+    Poligono diferenca;  //a - b
+
+    for (int i = 0; i < a.size(); i++)
+    {
+        Ponto a_i = a.get_vertice(i);
+        Ponto a_ii = a.get_vertice((i + 1) % a.size());
+
+        if (!aa[i])
+        {
+            insere_unico(diferenca, a_i);
+            insere_unico(diferenca, a_ii);
+        }
+        else
+        {
+            //pontos dentro de B que nao forem de intersecao nao devem ser incluidos
+            if (b.index(a_i) != -1) //poligono B tambem contem o ponto a(i), eh ponto de intersecao
+            {
+                insere_unico(diferenca, a_i);
+            }
+            if (b.index(a_ii) != -1) // poligono B tambem contem o ponto a(i+1), eh ponto intersec
+            {
+                insere_unico(diferenca, a_ii);
+            }
+        }
+    }
+
+    int ab_actual = 0;
+    int ab_true_count = 0;
+    int i=0;
+    for (int i=0; i< ab.size(); i++){
+        if(!aa[i])
+            ab_true_count++;
+    }
+    while(ab_actual < ab_true_count)
+    {
+        Ponto b_i = b.get_vertice(i % b.size());
+        Ponto b_ii = b.get_vertice((i + 1) % b.size());
+
+        if (ab[i % b.size()])
+        {
+            auto index_bi = diferenca.index(b_i);
+            auto index_bii = diferenca.index(b_ii);
+            if (index_bii != -1 && index_bi != -1)
+            {
+                ab_actual++;
+                continue; //a aresta esta toda la?
+            }
+            //logica inversa aa da intersecao
+            if (index_bii != -1 && index_bi == -1)
+            {
+                diferenca.insere_vertice(index_bii + 1, b_i);
+                ab_actual++;
+            }
+            else if (index_bi != -1 && index_bii == -1)
+            {
+                diferenca.insere_vertice(index_bi, b_ii);
+                ab_actual++;
+            }
+        }
+        i++;
     }
     return diferenca;
 }
