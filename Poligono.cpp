@@ -259,7 +259,7 @@ Poligono intersecao(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab
     int aa_true_count = 0;
     int i=0;
     for (int i=0; i< aa.size(); i++){
-        if(!aa[i])
+        if(aa[i])
             aa_true_count++;
     }
     while(aa_actual < aa_true_count)
@@ -325,7 +325,7 @@ Poligono diferenca(Poligono &a, Poligono &b, vector<bool>& aa, vector<bool>& ab)
     int ab_true_count = 0;
     int i=0;
     for (int i=0; i< ab.size(); i++){
-        if(!aa[i])
+        if(ab[i])
             ab_true_count++;
     }
     while(ab_actual < ab_true_count)
